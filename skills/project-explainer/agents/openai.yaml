@@ -1,0 +1,7 @@
+interface:
+  display_name: "Project Explainer"
+  short_description: "用文件地图、架构和真实流程讲懂软件项目"
+  default_prompt: "Use $project-explainer to explain this repository from the project owner's perspective. Start with a verified mental model and trace one real workflow."
+
+policy:
+  allow_implicit_invocation: false
