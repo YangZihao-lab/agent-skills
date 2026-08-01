@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "skills": [
+    {
+      "name": "acquire-codebase-knowledge",
+      "source_repo": "github/awesome-copilot",
+      "source_ref": "336af71f1b7d2e6e15a8a986ba79ca031a40549b",
+      "source_path": "skills/acquire-codebase-knowledge",
+      "license_path": "LICENSE"
+    },
+    {
+      "name": "code-tour",
+      "source_repo": "github/awesome-copilot",
+      "source_ref": "336af71f1b7d2e6e15a8a986ba79ca031a40549b",
+      "source_path": "skills/code-tour",
+      "license_path": "LICENSE"
+    },
+    {
+      "name": "learn-codebase",
+      "source_repo": "ktaletsk/learn-codebase",
+      "source_ref": "cbc0304609e76041f7f29b3ae9a1e3f1a16e07ad",
+      "source_path": ".",
+      "license_path": "LICENSE",
+      "exclude": [
+        ".git",
+        ".github",
+        "logo-dark.svg",
+        "logo-light.svg"
+      ]
+    }
+  ]
+}
