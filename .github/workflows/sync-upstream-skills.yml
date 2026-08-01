@@ -50,7 +50,7 @@ jobs:
       - name: Commit mirrored files
         shell: bash
         run: |
-          if git diff --quiet -- skills; then
+          if [[ -z "$(git status --porcelain -- skills)" ]]; then
             echo "No upstream skill changes."
             exit 0
           fi
