@@ -1,0 +1,7 @@
+interface:
+  display_name: "Layered Thinking Governance"
+  short_description: "按物事器术法分层，检查越级、目标漂移和低层成果冒充高层成功"
+  default_prompt: "Use $layered-thinking-governance to classify the current problem by layer, keep decisions within the current window's authority, and explain any escalation in plain Chinese."
+
+policy:
+  allow_implicit_invocation: true
