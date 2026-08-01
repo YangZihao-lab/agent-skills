@@ -1,0 +1,8 @@
+{
+  "source_repo": "github/awesome-copilot",
+  "source_ref": "336af71f1b7d2e6e15a8a986ba79ca031a40549b",
+  "resolved_commit": "336af71f1b7d2e6e15a8a986ba79ca031a40549b",
+  "source_path": "skills/code-tour",
+  "generated": true,
+  "edit_policy": "Do not edit this mirrored directory directly; update upstream-skills.json and resync."
+}
