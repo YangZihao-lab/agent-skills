@@ -1,0 +1,34 @@
+name: Validate skill catalog
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+    paths:
+      - catalog/**
+      - skills/**
+      - scripts/validate_catalog.py
+      - upstream-skills.json
+      - .github/workflows/validate-catalog.yml
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Compile validators
+        run: python -m py_compile scripts/validate_catalog.py scripts/sync_upstream.py
+
+      - name: Validate catalog and skill ownership
+        run: python scripts/validate_catalog.py
