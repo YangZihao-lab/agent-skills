@@ -1,5 +1,6 @@
 {
   "version": 1,
+  "sync_policy": "pinned-commits-only",
   "skills": [
     {
       "name": "acquire-codebase-knowledge",
