@@ -43,6 +43,32 @@ def fail(errors: list[str], message: str) -> None:
     errors.append(message)
 
 
+def validate_named_objects(
+    errors: list[str],
+    values: object,
+    label: str,
+) -> tuple[list[dict[str, object]], set[str]]:
+    if not isinstance(values, list):
+        fail(errors, f"catalog {label} must be a list")
+        return [], set()
+
+    objects: list[dict[str, object]] = []
+    identifiers: set[str] = set()
+    for index, value in enumerate(values):
+        if not isinstance(value, dict):
+            fail(errors, f"{label[:-1]} #{index + 1} must be an object")
+            continue
+        identifier = value.get("id")
+        if not isinstance(identifier, str) or not NAME_RE.fullmatch(identifier):
+            fail(errors, f"invalid {label[:-1]} id at index {index}: {identifier!r}")
+            continue
+        if identifier in identifiers:
+            fail(errors, f"duplicate {label[:-1]} id: {identifier}")
+        identifiers.add(identifier)
+        objects.append(value)
+    return objects, identifiers
+
+
 def main() -> int:
     errors: list[str] = []
     catalog = load_json(CATALOG_PATH)
@@ -50,30 +76,29 @@ def main() -> int:
 
     if not isinstance(catalog, dict):
         raise ValueError("catalog/skills.json must contain a JSON object")
-    if catalog.get("schema_version") != 1:
-        fail(errors, "catalog schema_version must be 1")
+    if catalog.get("schema_version") != 2:
+        fail(errors, "catalog schema_version must be 2")
 
-    categories = catalog.get("categories")
+    domains, domain_ids = validate_named_objects(errors, catalog.get("domains"), "domains")
+    subcategories, subcategory_ids = validate_named_objects(
+        errors, catalog.get("subcategories"), "subcategories"
+    )
+
+    subcategory_domains: dict[str, str] = {}
+    for subcategory in subcategories:
+        subcategory_id = subcategory.get("id")
+        domain = subcategory.get("domain")
+        if not isinstance(subcategory_id, str):
+            continue
+        if domain not in domain_ids:
+            fail(errors, f"subcategory {subcategory_id}: unknown domain {domain!r}")
+            continue
+        subcategory_domains[subcategory_id] = domain
+
     skills = catalog.get("skills")
-    if not isinstance(categories, list):
-        fail(errors, "catalog categories must be a list")
-        categories = []
     if not isinstance(skills, list):
         fail(errors, "catalog skills must be a list")
         skills = []
-
-    category_ids: set[str] = set()
-    for index, category in enumerate(categories):
-        if not isinstance(category, dict):
-            fail(errors, f"category #{index + 1} must be an object")
-            continue
-        category_id = category.get("id")
-        if not isinstance(category_id, str) or not NAME_RE.fullmatch(category_id):
-            fail(errors, f"invalid category id at index {index}: {category_id!r}")
-            continue
-        if category_id in category_ids:
-            fail(errors, f"duplicate category id: {category_id}")
-        category_ids.add(category_id)
 
     upstream_entries = upstream.get("skills", []) if isinstance(upstream, dict) else []
     upstream_names = {
@@ -96,9 +121,18 @@ def main() -> int:
             fail(errors, f"duplicate skill name: {name}")
         catalog_names.add(name)
 
-        category = item.get("category")
-        if category not in category_ids:
-            fail(errors, f"{name}: unknown category {category!r}")
+        domain = item.get("domain")
+        if domain not in domain_ids:
+            fail(errors, f"{name}: unknown domain {domain!r}")
+
+        subcategory = item.get("subcategory")
+        if subcategory not in subcategory_ids:
+            fail(errors, f"{name}: unknown subcategory {subcategory!r}")
+        elif subcategory_domains.get(str(subcategory)) != domain:
+            fail(
+                errors,
+                f"{name}: subcategory {subcategory!r} does not belong to domain {domain!r}",
+            )
 
         rel_path = item.get("path")
         expected_path = f"skills/{name}"
@@ -182,7 +216,8 @@ def main() -> int:
             {
                 "ok": True,
                 "skills": len(catalog_names),
-                "categories": len(category_ids),
+                "domains": len(domain_ids),
+                "subcategories": len(subcategory_ids),
                 "first_party": sum(
                     1 for item in skills if isinstance(item, dict) and item.get("ownership") == "first-party"
                 ),
