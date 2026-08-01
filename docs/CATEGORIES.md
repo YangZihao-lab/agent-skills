@@ -12,9 +12,7 @@
 
 ### `project-understanding` — 项目理解
 
-当前收录的四个 Skill 全都属于同一个顶层领域：帮助用户理解现有软件项目和代码库。
-
-它们不是四个并列的顶层分类，而是四种不同的讲解或学习方式。
+帮助用户理解现有软件项目和代码库。
 
 | 子类型 | 含义 | 当前 Skill |
 |---|---|---|
@@ -23,14 +21,25 @@
 | `guided-code-tour` | 通过真实文件、行号和叙事路径生成交互式导览 | `code-tour` |
 | `interactive-learning` | 通过提问、预测、主动回忆和学习日志形成长期理解 | `learn-codebase` |
 
-因此当前逻辑是：
-
 ```text
 项目理解
 ├─ 总览讲解         project-explainer
 ├─ 项目文档化       acquire-codebase-knowledge
 ├─ 代码导览         code-tour
 └─ 互动教学         learn-codebase
+```
+
+### `project-governance` — 项目治理
+
+帮助多窗口和多 Agent 项目区分问题层级、权限边界、方法论与执行，并检查目标漂移。
+
+| 子类型 | 含义 | 当前 Skill |
+|---|---|---|
+| `layered-governance` | 按物、事、器、术、法路由问题，检查低层成果冒充高层成功，并支持跨层交接和临时框架释放复盘 | `layered-thinking-governance` |
+
+```text
+项目治理
+└─ 分层思维治理     layered-thinking-governance
 ```
 
 ## 后续扩展方式
@@ -81,6 +90,7 @@
 当前 Skill：
 
 - `project-explainer`
+- `layered-thinking-governance`
 
 ### `mirrored-upstream`
 
@@ -112,6 +122,8 @@ policy:
 
 因此它不会进入普通开发任务的自动匹配路径。显式使用时应通过技能选择器或 `$project-explainer`。
 
+`layered-thinking-governance` 允许隐式调用，适用于项目规划、窗口分工、跨层交接和目标漂移审查；需要强制使用时仍可通过 `$layered-thinking-governance` 明确调用。
+
 ## 默认副作用
 
 目录记录每个 Skill 的默认写入行为：
@@ -119,6 +131,7 @@ policy:
 | Skill | 默认效果 |
 |---|---|
 | `project-explainer` | 只读 |
+| `layered-thinking-governance` | 只读 |
 | `acquire-codebase-knowledge` | 写入 `docs/codebase/` |
 | `code-tour` | 写入 `.tours/` |
 | `learn-codebase` | 写入 `.claude/learning-journal.md` |
