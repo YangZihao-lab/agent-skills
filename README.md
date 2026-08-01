@@ -19,7 +19,7 @@
 
 ## 当前收录
 
-当前四个 Skill 全都属于同一个顶层领域：**项目理解**。区别只是讲解和学习方式不同。
+当前包含两个顶层领域：**项目理解**与**项目治理**。
 
 | Skill | 领域 | 子类型 | 默认效果 | 所有权 | 来源 |
 |---|---|---|---|---|---|
@@ -27,6 +27,7 @@
 | `acquire-codebase-knowledge` | 项目理解 | 项目文档化 | 写入 `docs/codebase/` | Mirrored upstream | `github/awesome-copilot` |
 | `code-tour` | 项目理解 | 代码导览 | 写入 `.tours/` | Mirrored upstream | `github/awesome-copilot` |
 | `learn-codebase` | 项目理解 | 互动教学 | 写入 `.claude/learning-journal.md` | Mirrored upstream | `ktaletsk/learn-codebase` |
+| `layered-thinking-governance` | 项目治理 | 分层思维治理 | 只读 | First-party | 本仓库 |
 
 ```text
 项目理解
@@ -34,6 +35,9 @@
 ├─ 项目文档化       acquire-codebase-knowledge
 ├─ 代码导览         code-tour
 └─ 互动教学         learn-codebase
+
+项目治理
+└─ 分层思维治理     layered-thinking-governance
 ```
 
 以后可以并列增加真正不同的顶层领域，例如软件开发、代码审查、研究分析、写作、自动化、数据分析或运维发布；每个领域再定义自己的子类型。不会在没有实际 Skill 时预先创建空领域。
@@ -53,6 +57,12 @@
 
 它默认只读，并在 Codex 中关闭隐式调用。需要通过技能选择器或 `$project-explainer` 明确调用，不会自动干扰普通开发任务。
 
+### 项目治理：`layered-thinking-governance`
+
+用于按“物、事、器、术、法”判断当前问题、窗口权限和上报边界，检查低层成果是否被误当成高层成功，并在目标漂移时进行临时的框架释放复盘。
+
+它默认只读，允许 Agent 在项目规划、窗口分工、目标漂移审查和跨层交接场景中隐式调用；也可以通过 `$layered-thinking-governance` 明确调用。
+
 ## 本地安装
 
 列出仓库中的 Skill：
@@ -70,12 +80,21 @@ npx skills add YangZihao-lab/agent-skills `
   --global
 ```
 
-使用：
+安装分层思维治理 Skill：
+
+```powershell
+npx skills add YangZihao-lab/agent-skills `
+  --skill layered-thinking-governance `
+  --agent codex `
+  --global
+```
+
+明确使用：
 
 ```text
-$project-explainer
+$layered-thinking-governance
 
-讲解当前项目。先建立整体心智模型，再沿一条真实任务解释文件和状态变化。
+按层级审查当前项目：判断正在处理物、事、器、术还是法，检查是否越级或发生目标漂移。
 ```
 
 安装其他 Skill：
@@ -100,8 +119,8 @@ npx skills update --global
 网页端可以通过已连接的 GitHub 临时读取：
 
 ```text
-读取 YangZihao-lab/agent-skills/skills/project-explainer/SKILL.md，
-按照该流程讲解 YangZihao-lab/Control。
+读取 YangZihao-lab/agent-skills/skills/layered-thinking-governance/SKILL.md，
+按该 Skill 审查当前项目的层级、权限和目标漂移。
 ```
 
 也可以下载对应 Skill 文件夹并上传到 ChatGPT 的「技能」页面。网页端和本地 Agent 不会自动共享安装状态，但都以本仓库为版本源。
@@ -151,16 +170,17 @@ GitHub Actions 会在 Pull Request 和 `main` 更新时自动执行校验。
 ```text
 agent-skills/
 ├─ skills/
-│  ├─ project-explainer/            # First-party
-│  ├─ acquire-codebase-knowledge/   # Mirrored upstream
-│  ├─ code-tour/                    # Mirrored upstream
-│  └─ learn-codebase/               # Mirrored upstream
-├─ catalog/skills.json              # 领域、子类型和 Skill 机器目录
-├─ docs/CATEGORIES.md               # 分类和所有权规则
-├─ scripts/sync_upstream.py         # 固定提交镜像
-├─ scripts/validate_catalog.py      # 目录和边界校验
-├─ upstream-skills.json             # 第三方来源锁文件
-├─ AGENTS.md                        # 仓库维护约定
+│  ├─ project-explainer/               # First-party
+│  ├─ layered-thinking-governance/     # First-party
+│  ├─ acquire-codebase-knowledge/      # Mirrored upstream
+│  ├─ code-tour/                       # Mirrored upstream
+│  └─ learn-codebase/                  # Mirrored upstream
+├─ catalog/skills.json                 # 领域、子类型和 Skill 机器目录
+├─ docs/CATEGORIES.md                  # 分类和所有权规则
+├─ scripts/sync_upstream.py            # 固定提交镜像
+├─ scripts/validate_catalog.py         # 目录和边界校验
+├─ upstream-skills.json                # 第三方来源锁文件
+├─ AGENTS.md                           # 仓库维护约定
 └─ LICENSE
 ```
 
