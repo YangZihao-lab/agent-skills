@@ -4,21 +4,39 @@
 
 ## 管理模型
 
-仓库同时管理两类 Skill：
+仓库从三个维度统一管理 Skill：
+
+- **领域（domain）**：解决哪一大类问题。
+- **子类型（subcategory）**：在该领域内采用什么工作方式。
+- **所有权（ownership）**：本仓库直接维护，或从上游固定提交镜像。
+
+所有权分为：
 
 - **First-party**：本仓库直接维护，可以修改和迭代。
 - **Mirrored upstream**：从第三方仓库固定 Git 提交同步，不直接修改镜像目录。
 
-机器可读的统一目录位于 [`catalog/skills.json`](catalog/skills.json)，分类与维护规则见 [`docs/CATEGORIES.md`](docs/CATEGORIES.md)。
+机器可读的统一目录位于 [`catalog/skills.json`](catalog/skills.json)，领域、子类型和维护规则见 [`docs/CATEGORIES.md`](docs/CATEGORIES.md)。
 
 ## 当前收录
 
-| Skill | 分类 | 默认效果 | 所有权 | 来源 |
-|---|---|---|---|---|
-| `project-explainer` | 代码库理解 | 只读 | First-party | 本仓库 |
-| `acquire-codebase-knowledge` | 文档与导览 | 写入 `docs/codebase/` | Mirrored upstream | `github/awesome-copilot` |
-| `code-tour` | 文档与导览 | 写入 `.tours/` | Mirrored upstream | `github/awesome-copilot` |
-| `learn-codebase` | 互动学习 | 写入 `.claude/learning-journal.md` | Mirrored upstream | `ktaletsk/learn-codebase` |
+当前四个 Skill 全都属于同一个顶层领域：**项目理解**。区别只是讲解和学习方式不同。
+
+| Skill | 领域 | 子类型 | 默认效果 | 所有权 | 来源 |
+|---|---|---|---|---|---|
+| `project-explainer` | 项目理解 | 总览讲解 | 只读 | First-party | 本仓库 |
+| `acquire-codebase-knowledge` | 项目理解 | 项目文档化 | 写入 `docs/codebase/` | Mirrored upstream | `github/awesome-copilot` |
+| `code-tour` | 项目理解 | 代码导览 | 写入 `.tours/` | Mirrored upstream | `github/awesome-copilot` |
+| `learn-codebase` | 项目理解 | 互动教学 | 写入 `.claude/learning-journal.md` | Mirrored upstream | `ktaletsk/learn-codebase` |
+
+```text
+项目理解
+├─ 总览讲解         project-explainer
+├─ 项目文档化       acquire-codebase-knowledge
+├─ 代码导览         code-tour
+└─ 互动教学         learn-codebase
+```
+
+以后可以并列增加真正不同的顶层领域，例如软件开发、代码审查、研究分析、写作、自动化、数据分析或运维发布；每个领域再定义自己的子类型。不会在没有实际 Skill 时预先创建空领域。
 
 ### 推荐入口：`project-explainer`
 
@@ -34,14 +52,6 @@
 8. 用简短问题检查是否真正理解。
 
 它默认只读，并在 Codex 中关闭隐式调用。需要通过技能选择器或 `$project-explainer` 明确调用，不会自动干扰普通开发任务。
-
-## 分类
-
-- `codebase-understanding`：建立整体心智模型。
-- `codebase-documentation`：生成长期保存的项目文档或 CodeTour。
-- `guided-learning`：通过主动回忆和学习记录形成长期理解。
-
-详细定义、所有权规则和副作用说明见 [`docs/CATEGORIES.md`](docs/CATEGORIES.md)。
 
 ## 本地安装
 
@@ -126,7 +136,9 @@ python scripts/validate_catalog.py
 
 - Skill 目录名与 `SKILL.md` 的 `name` 一致；
 - 每个 Skill 都有目录条目；
-- 分类存在且不重复；
+- 顶层领域存在且不重复；
+- 子类型存在、唯一且属于正确领域；
+- Skill 的领域和子类型关系正确；
 - First-party 与镜像目录边界正确；
 - 镜像 Skill 已登记在 `upstream-skills.json`；
 - 脚本声明与真实目录一致；
@@ -143,7 +155,7 @@ agent-skills/
 │  ├─ acquire-codebase-knowledge/   # Mirrored upstream
 │  ├─ code-tour/                    # Mirrored upstream
 │  └─ learn-codebase/               # Mirrored upstream
-├─ catalog/skills.json              # 统一机器目录
+├─ catalog/skills.json              # 领域、子类型和 Skill 机器目录
 ├─ docs/CATEGORIES.md               # 分类和所有权规则
 ├─ scripts/sync_upstream.py         # 固定提交镜像
 ├─ scripts/validate_catalog.py      # 目录和边界校验

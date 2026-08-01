@@ -10,12 +10,23 @@
 - 自建 Skill 属于 `first-party`，直接放入 `skills/<name>/`，不得添加 `_UPSTREAM.json`。
 - 对第三方 Skill 的本地改造应建立新的 First-party Skill 名称，不要篡改镜像目录。
 
+## 两级分类
+
+- **领域（domain）**表示 Skill 解决哪一大类问题，例如项目理解、软件开发、研究分析或工作流自动化。
+- **子类型（subcategory）**表示该领域内的具体工作方式，例如总览讲解、项目文档化、代码导览或互动教学。
+- 不得把同一领域内的不同输出形式误建成多个顶层领域。
+- 只有存在实际 Skill 时才新增领域或子类型，不提前建立空分类。
+- 每个子类型必须明确指向一个领域；每个 Skill 的领域与子类型必须匹配。
+
+当前四个 Skill 全部属于 `project-understanding` 领域，分别使用四个不同子类型。
+
 ## 统一目录
 
 - 每个 `skills/<name>/SKILL.md` 都必须在 `catalog/skills.json` 登记。
-- 每个目录条目必须声明：分类、所有权、状态、调用策略、默认副作用、是否包含脚本和支持平台。
+- 每个目录条目必须声明：领域、子类型、所有权、状态、调用策略、默认副作用、是否包含脚本和支持平台。
 - Skill 名称、目录名与 `SKILL.md` frontmatter 的 `name` 必须一致。
-- 分类必须先在 `catalog/skills.json` 的 `categories` 中定义，并同步说明到 `docs/CATEGORIES.md`。
+- 新领域必须先在 `domains` 中定义；新子类型必须在 `subcategories` 中定义并指向正确领域。
+- 分类定义必须同步说明到 `docs/CATEGORIES.md`。
 - 删除或重命名 Skill 时，必须同时更新目录、README、来源锁文件和相关文档。
 
 ## First-party Skill
@@ -30,7 +41,7 @@
 
 - 默认不执行上游脚本；同步过程只复制文件。
 - 不提交凭据、私有项目源码、聊天记录、原始敏感日志或本机绝对路径。
-- 新增、删除、移动或更新 Skill 后必须运行：
+- 新增、删除、移动或更新 Skill、领域或子类型后必须运行：
 
 ```powershell
 python scripts/validate_catalog.py
