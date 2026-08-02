@@ -1,0 +1,7 @@
+interface:
+  display_name: "Project Razor"
+  short_description: "用断舍离和剃刀简化项目结构，减少重复入口与认知负荷"
+  default_prompt: "Use $project-razor to audit this project's structure, identify the highest cognitive-load sources, and propose a reversible simplification plan in plain Chinese. Do not modify anything without explicit approval."
+
+policy:
+  allow_implicit_invocation: false
