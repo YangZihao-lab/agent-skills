@@ -10,24 +10,20 @@
 - **子类型（subcategory）**：在该领域内采用什么工作方式。
 - **所有权（ownership）**：本仓库直接维护，或从上游固定提交镜像。
 
-所有权分为：
-
-- **First-party**：本仓库直接维护，可以修改和迭代。
-- **Mirrored upstream**：从第三方仓库固定 Git 提交同步，不直接修改镜像目录。
-
-机器可读的统一目录位于 [`catalog/skills.json`](catalog/skills.json)，领域、子类型和维护规则见 [`docs/CATEGORIES.md`](docs/CATEGORIES.md)。
+机器可读目录位于 [`catalog/skills.json`](catalog/skills.json)，领域、子类型和维护规则见 [`docs/CATEGORIES.md`](docs/CATEGORIES.md)。
 
 ## 当前收录
 
 当前包含两个顶层领域：**项目理解**与**项目治理**。
 
-| Skill | 领域 | 子类型 | 默认效果 | 所有权 | 来源 |
+| Skill | 领域 | 子类型 | 默认效果 | 调用 | 所有权 |
 |---|---|---|---|---|---|
-| `project-explainer` | 项目理解 | 总览讲解 | 只读 | First-party | 本仓库 |
-| `acquire-codebase-knowledge` | 项目理解 | 项目文档化 | 写入 `docs/codebase/` | Mirrored upstream | `github/awesome-copilot` |
-| `code-tour` | 项目理解 | 代码导览 | 写入 `.tours/` | Mirrored upstream | `github/awesome-copilot` |
-| `learn-codebase` | 项目理解 | 互动教学 | 写入 `.claude/learning-journal.md` | Mirrored upstream | `ktaletsk/learn-codebase` |
-| `layered-thinking-governance` | 项目治理 | 分层思维治理 | 只读 | First-party | 本仓库 |
+| `project-explainer` | 项目理解 | 总览讲解 | 只读 | 显式 | First-party |
+| `acquire-codebase-knowledge` | 项目理解 | 项目文档化 | 写入 `docs/codebase/` | 可隐式 | Mirrored upstream |
+| `code-tour` | 项目理解 | 代码导览 | 写入 `.tours/` | 可隐式 | Mirrored upstream |
+| `learn-codebase` | 项目理解 | 互动教学 | 写入 `.claude/learning-journal.md` | 显式 | Mirrored upstream |
+| `layered-thinking-governance` | 项目治理 | 分层思维治理 | 只读 | 可隐式 | First-party |
+| `project-razor` | 项目治理 | 结构断舍离 | 只读 | 显式 | First-party |
 
 ```text
 项目理解
@@ -37,31 +33,25 @@
 └─ 互动教学         learn-codebase
 
 项目治理
-└─ 分层思维治理     layered-thinking-governance
+├─ 分层思维治理     layered-thinking-governance
+└─ 结构断舍离       project-razor
 ```
 
-以后可以并列增加真正不同的顶层领域，例如软件开发、代码审查、研究分析、写作、自动化、数据分析或运维发布；每个领域再定义自己的子类型。不会在没有实际 Skill 时预先创建空领域。
+## 主要 Skill
 
-### 推荐入口：`project-explainer`
+### `project-explainer`
 
-用于从项目所有者视角理解现有仓库：
+从项目所有者视角理解现有仓库：解释项目目的、文件职责、架构、真实工作流、状态来源和故障边界。默认只读并关闭隐式调用。
 
-1. 解释项目为什么存在；
-2. 按职责整理完整文件地图；
-3. 建立三到五个核心概念；
-4. 说明架构、状态来源和边界；
-5. 沿一条真实任务追踪文件与状态变化；
-6. 区分已验证事实、推断和未知信息；
-7. 解释故障与恢复路径；
-8. 用简短问题检查是否真正理解。
+### `layered-thinking-governance`
 
-它默认只读，并在 Codex 中关闭隐式调用。需要通过技能选择器或 `$project-explainer` 明确调用，不会自动干扰普通开发任务。
+按“物、事、器、术、法”判断当前问题、窗口权限和上报边界，检查低层成果是否被误当成高层成功，并在目标漂移时进行临时框架释放复盘。默认只读，允许隐式调用。
 
-### 项目治理：`layered-thinking-governance`
+### `project-razor`
 
-用于按“物、事、器、术、法”判断当前问题、窗口权限和上报边界，检查低层成果是否被误当成高层成功，并在目标漂移时进行临时的框架释放复盘。
+通过断舍离、单一真相源和可逆剃刀，简化项目目录、文档、分支、工具、协议和工作流，减少新窗口与用户需要同时记住的内容。
 
-它默认只读，允许 Agent 在项目规划、窗口分工、目标漂移审查和跨层交接场景中隐式调用；也可以通过 `$layered-thinking-governance` 明确调用。
+它默认只读并关闭隐式调用。任何移动、合并、归档或删除都必须先展示精确计划，并获得用户明确批准。
 
 ## 本地安装
 
@@ -71,39 +61,32 @@
 npx skills add YangZihao-lab/agent-skills --list
 ```
 
-全局安装 `project-explainer` 到 Codex：
-
-```powershell
-npx skills add YangZihao-lab/agent-skills `
-  --skill project-explainer `
-  --agent codex `
-  --global
-```
-
-安装分层思维治理 Skill：
+安装到 Codex：
 
 ```powershell
 npx skills add YangZihao-lab/agent-skills `
   --skill layered-thinking-governance `
   --agent codex `
   --global
+
+npx skills add YangZihao-lab/agent-skills `
+  --skill project-razor `
+  --agent codex `
+  --global
 ```
 
-明确使用：
+明确调用：
 
 ```text
 $layered-thinking-governance
 
-按层级审查当前项目：判断正在处理物、事、器、术还是法，检查是否越级或发生目标漂移。
+按层级审查当前项目，检查是否越级或发生目标漂移。
 ```
 
-安装其他 Skill：
+```text
+$project-razor
 
-```powershell
-npx skills add YangZihao-lab/agent-skills `
-  --skill acquire-codebase-knowledge `
-  --agent codex `
-  --global
+对当前仓库执行 QUICK_RAZOR，只读，指出最影响理解的五个复杂度来源。
 ```
 
 更新已安装 Skill：
@@ -119,8 +102,8 @@ npx skills update --global
 网页端可以通过已连接的 GitHub 临时读取：
 
 ```text
-读取 YangZihao-lab/agent-skills/skills/layered-thinking-governance/SKILL.md，
-按该 Skill 审查当前项目的层级、权限和目标漂移。
+读取 YangZihao-lab/agent-skills/skills/project-razor/SKILL.md，
+按照该 Skill 对目标仓库执行只读结构审计。
 ```
 
 也可以下载对应 Skill 文件夹并上传到 ChatGPT 的「技能」页面。网页端和本地 Agent 不会自动共享安装状态，但都以本仓库为版本源。
@@ -128,12 +111,6 @@ npx skills update --global
 ## 上游同步
 
 `upstream-skills.json` 是第三方来源锁文件。修改其中的 `source_ref` 后，GitHub Actions 会重新抓取固定提交并更新 `skills/`。
-
-每个镜像 Skill 都包含：
-
-- `_UPSTREAM.json`：来源仓库、固定提交和原路径；
-- 上游许可证；
-- 完整的 `SKILL.md`、脚本、模板与参考资料。
 
 本地也可以运行：
 
@@ -145,25 +122,11 @@ python scripts/sync_upstream.py
 
 ## 校验
 
-统一目录必须覆盖 `skills/` 下的每一个可安装 Skill：
-
 ```powershell
 python scripts/validate_catalog.py
 ```
 
-校验包括：
-
-- Skill 目录名与 `SKILL.md` 的 `name` 一致；
-- 每个 Skill 都有目录条目；
-- 顶层领域存在且不重复；
-- 子类型存在、唯一且属于正确领域；
-- Skill 的领域和子类型关系正确；
-- First-party 与镜像目录边界正确；
-- 镜像 Skill 已登记在 `upstream-skills.json`；
-- 脚本声明与真实目录一致；
-- `project-explainer` 保持显式调用策略。
-
-GitHub Actions 会在 Pull Request 和 `main` 更新时自动执行校验。
+校验包括 Skill 目录、目录登记、领域与子类型、所有权边界、脚本声明和调用策略。GitHub Actions 会在 Pull Request 和 `main` 更新时自动执行校验。
 
 ## 目录
 
@@ -172,20 +135,21 @@ agent-skills/
 ├─ skills/
 │  ├─ project-explainer/               # First-party
 │  ├─ layered-thinking-governance/     # First-party
+│  ├─ project-razor/                   # First-party
 │  ├─ acquire-codebase-knowledge/      # Mirrored upstream
 │  ├─ code-tour/                       # Mirrored upstream
 │  └─ learn-codebase/                  # Mirrored upstream
-├─ catalog/skills.json                 # 领域、子类型和 Skill 机器目录
-├─ docs/CATEGORIES.md                  # 分类和所有权规则
-├─ scripts/sync_upstream.py            # 固定提交镜像
-├─ scripts/validate_catalog.py         # 目录和边界校验
-├─ upstream-skills.json                # 第三方来源锁文件
-├─ AGENTS.md                           # 仓库维护约定
+├─ catalog/skills.json
+├─ docs/CATEGORIES.md
+├─ scripts/sync_upstream.py
+├─ scripts/validate_catalog.py
+├─ upstream-skills.json
+├─ AGENTS.md
 └─ LICENSE
 ```
 
 ## 安全与许可证
 
-安装第三方 Skill 前应检查其 `SKILL.md`、`scripts/` 和权限要求。Skill 被安装并调用后，可能运行命令或修改文件；本仓库收录不等于安全背书。
+安装第三方 Skill 前应检查其 `SKILL.md`、脚本和权限要求。Skill 被安装并调用后，可能运行命令或修改文件；本仓库收录不等于安全背书。
 
 本仓库自身采用 MIT License。镜像的第三方 Skill 继续适用各自的上游许可证。
