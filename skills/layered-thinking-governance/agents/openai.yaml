@@ -1,7 +1,7 @@
 interface:
   display_name: "Layered Thinking Governance"
-  short_description: "按物事器术法分层，保持权限边界并要求所有窗口定期向上复核目标"
-  default_prompt: "Use $layered-thinking-governance to classify the current problem by layer, perform an upward review of one or two levels without expanding decision authority, detect goal drift, and explain any escalation in plain Chinese."
+  short_description: "按层级上浮复核，并用双轮高价值收敛避免无限完善"
+  default_prompt: "Use $layered-thinking-governance to classify the current problem by layer, perform an upward review without expanding authority, define or audit the current two-pass high-value convergence cycle, close the cycle after pass two unless a blocker or high-risk exception remains, and explain the result in plain Chinese."
 
 policy:
   allow_implicit_invocation: true
