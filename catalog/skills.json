@@ -41,7 +41,7 @@
       "id": "layered-governance",
       "domain": "project-governance",
       "name": "分层思维治理",
-      "description": "按物、事、器、术、法识别问题和窗口权限，要求各层在不越权的前提下向上复核目标，并通过临时框架释放复盘检查目标漂移。"
+      "description": "按物、事、器、术、法识别问题和窗口权限，要求各层在不越权的前提下向上复核目标，并用双轮高价值收敛控制投入和停止条件。"
     },
     {
       "id": "structural-simplification",
@@ -179,6 +179,8 @@
         "window-authority-routing",
         "upward-layer-review",
         "authority-bounded-reflection",
+        "two-pass-high-value-convergence",
+        "convergence-cycle-control",
         "goal-drift-audit",
         "cross-layer-handoff",
         "frame-release-review",
