@@ -21,60 +21,24 @@
 | `guided-code-tour` | 通过真实文件、行号和叙事路径生成交互式导览 | `code-tour` |
 | `interactive-learning` | 通过提问、预测、主动回忆和学习日志形成长期理解 | `learn-codebase` |
 
-```text
-项目理解
-├─ 总览讲解         project-explainer
-├─ 项目文档化       acquire-codebase-knowledge
-├─ 代码导览         code-tour
-└─ 互动教学         learn-codebase
-```
-
 ### `project-governance` — 项目治理
 
-帮助多窗口和多 Agent 项目区分问题层级、权限边界、方法论与执行，并检查目标漂移。
+帮助多窗口和多 Agent 项目区分问题层级、权限边界、方法论与执行，检查目标漂移，并降低项目结构和维护面的认知负荷。
 
 | 子类型 | 含义 | 当前 Skill |
 |---|---|---|
 | `layered-governance` | 按物、事、器、术、法路由问题，检查低层成果冒充高层成功，并支持跨层交接和临时框架释放复盘 | `layered-thinking-governance` |
+| `structural-simplification` | 通过断舍离、单一真相源和可逆剃刀简化目录、文档、分支、工具、协议和工作流 | `project-razor` |
 
 ```text
 项目治理
-└─ 分层思维治理     layered-thinking-governance
+├─ 分层思维治理     layered-thinking-governance
+└─ 结构断舍离       project-razor
 ```
 
 ## 后续扩展方式
 
-以后增加不同用途的 Skill 时，应先判断它是否属于现有领域；只有确实解决另一大类问题时，才新增顶层领域。
-
-可能出现的未来领域示例：
-
-```text
-软件开发
-代码质量与审查
-研究与分析
-写作与内容生产
-工作流自动化
-数据分析
-运维与发布
-```
-
-这些只是扩展方向，不会在没有实际 Skill 时提前写进机器目录，避免空分类和失控增长。
-
-每个新领域可以继续拥有自己的子类型。例如：
-
-```text
-软件开发
-├─ 功能实现
-├─ 缺陷修复
-├─ 重构
-└─ 测试生成
-
-研究与分析
-├─ 资料检索
-├─ 证据审定
-├─ 对比分析
-└─ 报告生成
-```
+以后增加不同用途的 Skill 时，应先判断它是否属于现有领域；只有确实解决另一大类问题时，才新增顶层领域。不会在没有实际 Skill 时提前创建空分类。
 
 ## 所有权类型
 
@@ -91,6 +55,7 @@
 
 - `project-explainer`
 - `layered-thinking-governance`
+- `project-razor`
 
 ### `mirrored-upstream`
 
@@ -113,25 +78,17 @@
 - `explicit`：只应由用户明确选择或使用 `$skill-name` 调用。
 - `implicit-eligible`：Agent 可以根据 Skill 描述自动匹配；安装前应检查描述是否过宽。
 
-`project-explainer` 在 Codex 中通过 `agents/openai.yaml` 设置：
-
-```yaml
-policy:
-  allow_implicit_invocation: false
-```
-
-因此它不会进入普通开发任务的自动匹配路径。显式使用时应通过技能选择器或 `$project-explainer`。
+`project-explainer` 和 `project-razor` 关闭隐式调用。前者避免普通开发任务被讲解流程打断；后者可能提出移动、合并、归档或删除建议，因此必须由用户主动调用。
 
 `layered-thinking-governance` 允许隐式调用，适用于项目规划、窗口分工、跨层交接和目标漂移审查；需要强制使用时仍可通过 `$layered-thinking-governance` 明确调用。
 
 ## 默认副作用
 
-目录记录每个 Skill 的默认写入行为：
-
 | Skill | 默认效果 |
 |---|---|
 | `project-explainer` | 只读 |
 | `layered-thinking-governance` | 只读 |
+| `project-razor` | 只读；执行清理需用户批准精确计划 |
 | `acquire-codebase-knowledge` | 写入 `docs/codebase/` |
 | `code-tour` | 写入 `.tours/` |
 | `learn-codebase` | 写入 `.claude/learning-journal.md` |
