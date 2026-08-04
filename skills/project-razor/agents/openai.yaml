@@ -1,7 +1,7 @@
 interface:
   display_name: "Project Razor"
-  short_description: "沿最短主链做断舍离，删除一次性负担并阻止旧结构重建"
-  default_prompt: "Use $project-razor to identify the shortest active mainline, current consumers, proof ceilings, disposable artifacts and duplicate truth sources; propose a reversible cut plan, mark failed legacy structures as DO_NOT_RECREATE, and never modify or restore anything without explicit approval."
+  short_description: "每次新增前检查需要、替代、归宿，以生成核和认知预算保持简洁"
+  default_prompt: "Use $project-razor as an always-on read-only guard. Before creating, installing, or retaining persistent structure, silently check necessity, existing alternatives, lifecycle/exit, generative core, and cognitive cost. Preserve long-term environments with real consumers. Only surface the check when it changes the action, and never move, delete, archive, or restore anything without explicit approval."
 
 policy:
-  allow_implicit_invocation: false
+  allow_implicit_invocation: true
