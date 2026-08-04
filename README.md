@@ -10,7 +10,7 @@
 - **子类型（subcategory）**：在该领域内采用什么工作方式。
 - **所有权（ownership）**：本仓库直接维护，或从上游固定提交镜像。
 
-机器可读目录位于 [`catalog/skills.json`](catalog/skills.json)，领域、子类型和维护规则见 [`docs/CATEGORIES.md`](docs/CATEGORIES.md)。
+机器可读的统一目录位于 [`catalog/skills.json`](catalog/skills.json)，领域、子类型和维护规则见 [`docs/CATEGORIES.md`](docs/CATEGORIES.md)。
 
 ## 当前收录
 
@@ -23,7 +23,7 @@
 | `code-tour` | 项目理解 | 代码导览 | 写入 `.tours/` | 可隐式 | Mirrored upstream |
 | `learn-codebase` | 项目理解 | 互动教学 | 写入 `.claude/learning-journal.md` | 显式 | Mirrored upstream |
 | `layered-thinking-governance` | 项目治理 | 分层思维治理 | 只读 | 可隐式 | First-party |
-| `project-razor` | 项目治理 | 结构断舍离 | 只读 | 显式 | First-party |
+| `project-razor` | 项目治理 | 结构断舍离 | 只读 | 可隐式 | First-party |
 
 ```text
 项目理解
@@ -49,9 +49,11 @@
 
 ### `project-razor`
 
-通过断舍离、单一真相源和可逆剃刀，简化项目目录、文档、分支、工具、协议和工作流，减少新窗口与用户需要同时记住的内容。
+把断舍离贯彻到每个动作：在创建、安装或长期保留结构前，先检查是否真的需要、是否已有替代、最终如何退出，并优先保留更简洁、更有生成力的核心。
 
-它默认只读并关闭隐式调用。任何移动、合并、归档或删除都必须先展示精确计划，并获得用户明确批准。
+它允许隐式调用，但隐式模式只执行轻量、只读的 `PRE_ACTION_RAZOR`；没有问题时可以静默通过，不会自动发起大清理。任何移动、合并、归档、删除或恢复仍必须先展示精确计划，并获得用户明确批准。
+
+长期反复使用且有明确消费者、职责和退役条件的环境可以保留；体积大或理论上可重建，不是充分删除理由。
 
 ## 本地安装
 
@@ -81,6 +83,12 @@ npx skills add YangZihao-lab/agent-skills `
 $layered-thinking-governance
 
 按层级审查当前项目，检查是否越级或发生目标漂移。
+```
+
+```text
+$project-razor
+
+对准备新增的对象执行 PRE_ACTION_RAZOR：检查需要、替代、归宿、生成核和认知成本。
 ```
 
 ```text
