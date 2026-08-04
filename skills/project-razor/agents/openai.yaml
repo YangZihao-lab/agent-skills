@@ -1,7 +1,7 @@
 interface:
   display_name: "Project Razor"
-  short_description: "用断舍离和剃刀简化项目结构，减少重复入口与认知负荷"
-  default_prompt: "Use $project-razor to audit this project's structure, identify the highest cognitive-load sources, and propose a reversible simplification plan in plain Chinese. Do not modify anything without explicit approval."
+  short_description: "沿最短主链做断舍离，删除一次性负担并阻止旧结构重建"
+  default_prompt: "Use $project-razor to identify the shortest active mainline, current consumers, proof ceilings, disposable artifacts and duplicate truth sources; propose a reversible cut plan, mark failed legacy structures as DO_NOT_RECREATE, and never modify or restore anything without explicit approval."
 
 policy:
   allow_implicit_invocation: false
