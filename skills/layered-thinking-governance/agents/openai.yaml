@@ -1,7 +1,7 @@
 interface:
   display_name: "Layered Thinking Governance"
-  short_description: "按层级上浮复核，并用双轮高价值收敛避免无限完善"
-  default_prompt: "Use $layered-thinking-governance to classify the current problem by layer, perform an upward review without expanding authority, define or audit the current two-pass high-value convergence cycle, close the cycle after pass two unless a blocker or high-risk exception remains, and explain the result in plain Chinese."
+  short_description: "按层级上浮复核、限制长期产物，并在结构膨胀时触发剃刀审计"
+  default_prompt: "Use $layered-thinking-governance to classify the current problem by layer, perform an upward review without expanding authority, define the shortest main chain, allowed persistent artifacts and proof ceiling, close the two-pass convergence cycle unless a blocker or high-risk exception remains, and request $project-razor when structure grows beyond the approved mainline."
 
 policy:
   allow_implicit_invocation: true
