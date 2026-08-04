@@ -15,7 +15,10 @@
 - **当前轮次：** 第一轮 / 第二轮 / 例外继续 / 未定义
 - **main_chain：**
 - **must_hold_invariants：**
+- **allowed_persistent_artifacts：**
+- **temporary_by_default：**
 - **acceptance_evidence：**
+- **proof_ceiling：**
 - **stop_condition：**
 - **本窗口是否有权定义或改变以上内容：** 是 / 否
 
@@ -40,6 +43,9 @@
 - [ ] 实际工作偏离原计划
 - [ ] 低层指标改善，但没有下游能力证据
 - [ ] 当前窗口开始替上一层作决定
+- [ ] 新增长期文件、索引、环境或治理结构，但没有明确消费者
+- [ ] 文件物理上齐全，却没有证明内容质量、可用性或上层能力
+- [ ] 清理或整理工作正在制造新的永久管理负担
 
 如果勾选任一项，回答：
 
@@ -78,6 +84,7 @@
 - `CLOSE_CURRENT_CYCLE`：当前目标已满足，剩余问题已分类，停止继续完善。
 - `ESCALATE`：上报更高层窗口或用户。
 - `PAUSE_FOR_REVIEW`：暂停自动扩张，等待复盘。
+- `REQUEST_RAZOR_AUDIT`：保留当前方向，交给 Project Razor 检查最小活跃结构、一次性产物和多重真相源。
 
 ## 9. 人话版结论
 
