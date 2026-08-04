@@ -18,7 +18,10 @@
 - convergence_target：
 - main_chain：
 - must_hold_invariants：
+- allowed_persistent_artifacts：
+- temporary_by_default：
 - acceptance_evidence：
+- proof_ceiling：
 - stop_condition：
 - 当前轮次：第一轮 / 第二轮 / 例外继续
 - 场景分类：
@@ -27,6 +30,7 @@
 - 成功标准：
 - 停止条件：
 - 不得自动扩大到：
+- 需要 Project Razor 审查的结构触发条件：
 
 ## 器 → 事
 
@@ -34,7 +38,10 @@
 - 当前轮次：
 - 本轮主链：
 - 不可延期约束：
+- 本轮允许长期保留的产物：
+- 其他产物的清理策略：
 - 本轮验收证据：
+- 本轮证明上限：
 - 本轮停止条件：
 - 输入：
 - 固定方法：
@@ -48,6 +55,8 @@
 
 - 实际修改：
 - 产生的文件：
+- 长期保留：
+- 一次性待清理：
 - 运行的数据：
 - 测试结果：
 - 与预期差异：
