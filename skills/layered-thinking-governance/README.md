@@ -1,4 +1,4 @@
-# 分层思维治理 v0.4
+# 分层思维治理 v0.5
 
 这是根据用户提供的《思维的层级》《思维决定人的层级》设计的项目治理 Skill。
 
@@ -14,6 +14,15 @@
 8. 核心规则是：**思维可以上浮，权限不能悄悄上浮。**
 9. `认知突破`只用于支持“当前思维难以独立发现自身局限，因此需要外部复核”这一原则。
 10. 未使用“认知自我—认知社会”层级，也未使用道德层级。
+
+## v0.5 新增
+
+- 开工前固定 `initial_goal / current_layer / shortest_main_chain / allowed_persistent_artifacts / proof_ceiling / stop_condition`；
+- 一次性脚本、环境、缓存、日志和中间治理产物默认不进入长期结构；
+- 明确“文件齐全、时间轴生成、教材写完、课程遍历”各自的最大可证明范围；
+- 新增 `REQUEST_RAZOR_AUDIT`，在方向不变但结构膨胀时交由 Project Razor 做减法；
+- 分层治理与 Project Razor 的正式分工：前者决定目标、层级、权限和主链，后者压缩器、事、物层结构；
+- Kala-Agent 示例加入实际七轮清理得到的证明边界和认知拓扑教训。
 
 ## v0.4 新增
 
@@ -63,8 +72,6 @@ npx skills add YangZihao-lab/agent-skills `
 npx skills update --global
 ```
 
-若只想确保这个 Skill 被重新安装，也可以再次执行首次安装命令，并按当前 Skills CLI 的提示覆盖或更新。
-
 更新后建议新建 Codex 会话，让新会话重新发现最新 Skill。
 
 ## ChatGPT 网页端更新
@@ -83,5 +90,5 @@ npx skills update --global
 ```text
 $layered-thinking-governance
 
-对当前任务执行 UPWARD_REVIEW，并检查当前双轮收敛周期：保持当前职责不变，向上检查一至两层，说明当前工作服务什么目标、证明了什么、没有证明什么，当前是第一轮还是第二轮，以及是否应关闭当前周期或上报。
+对当前任务执行 UPWARD_REVIEW，并检查开工六项和当前双轮收敛周期；保持当前职责不变，说明最短主链、允许长期产物、最大证明范围，以及是否应关闭周期、上报或请求 Project Razor 审计。
 ```
