@@ -47,7 +47,7 @@
       "id": "structural-simplification",
       "domain": "project-governance",
       "name": "结构断舍离",
-      "description": "通过断舍离、单一真相源和可逆剃刀减少项目结构、文档、分支、工具与流程的认知负荷。"
+      "description": "在每次新增前检查需要、替代和归宿，并通过生成核、单一真相源和可逆剃刀降低项目结构与认知负荷。"
     }
   ],
   "skills": [
@@ -209,6 +209,13 @@
       "domain": "project-governance",
       "subcategory": "structural-simplification",
       "capabilities": [
+        "pre-action-necessity-check",
+        "alternative-reuse-review",
+        "artifact-lifecycle-design",
+        "persistent-environment-review",
+        "generative-core-preservation",
+        "cognitive-budget-guard",
+        "elegant-sufficiency-review",
         "cognitive-load-audit",
         "single-source-of-truth-review",
         "documentation-decluttering",
@@ -221,7 +228,7 @@
         "type": "first-party"
       },
       "status": "active",
-      "invocation": "explicit",
+      "invocation": "implicit-eligible",
       "default_effect": "read-only",
       "contains_scripts": false,
       "platforms": [
