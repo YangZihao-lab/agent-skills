@@ -28,7 +28,7 @@
 | 子类型 | 含义 | 当前 Skill |
 |---|---|---|
 | `layered-governance` | 按物、事、器、术、法路由问题，检查低层成果冒充高层成功，并支持跨层交接和临时框架释放复盘 | `layered-thinking-governance` |
-| `structural-simplification` | 通过断舍离、单一真相源和可逆剃刀简化目录、文档、分支、工具、协议和工作流 | `project-razor` |
+| `structural-simplification` | 在每次新增前检查需要、替代和归宿，并通过生成核、单一真相源和可逆剃刀简化长期结构 | `project-razor` |
 
 ```text
 项目治理
@@ -78,9 +78,17 @@
 - `explicit`：只应由用户明确选择或使用 `$skill-name` 调用。
 - `implicit-eligible`：Agent 可以根据 Skill 描述自动匹配；安装前应检查描述是否过宽。
 
-`project-explainer` 和 `project-razor` 关闭隐式调用。前者避免普通开发任务被讲解流程打断；后者可能提出移动、合并、归档或删除建议，因此必须由用户主动调用。
+`project-explainer` 关闭隐式调用，避免普通开发任务被讲解流程打断。
 
-`layered-thinking-governance` 允许隐式调用，适用于项目规划、窗口分工、跨层交接和目标漂移审查；需要强制使用时仍可通过 `$layered-thinking-governance` 明确调用。
+`layered-thinking-governance` 允许隐式调用，适用于项目规划、窗口分工、跨层交接和目标漂移审查。
+
+`project-razor` 也允许隐式调用，但隐式模式严格限制为只读的 `PRE_ACTION_RAZOR`：
+
+- 在新增或长期保留结构前检查需要、替代、生命周期、生成核和认知成本；
+- 没有问题时可以静默通过；
+- 不自动发起全仓库清理；
+- 不移动、合并、归档、删除或恢复任何内容；
+- 所有实际处置仍需用户明确批准精确计划。
 
 ## 默认副作用
 
@@ -88,12 +96,12 @@
 |---|---|
 | `project-explainer` | 只读 |
 | `layered-thinking-governance` | 只读 |
-| `project-razor` | 只读；执行清理需用户批准精确计划 |
+| `project-razor` | 只读；隐式仅作动作前检查，执行清理需用户批准精确计划 |
 | `acquire-codebase-knowledge` | 写入 `docs/codebase/` |
 | `code-tour` | 写入 `.tours/` |
 | `learn-codebase` | 写入 `.claude/learning-journal.md` |
 
-安装 Skill 不会自动执行这些行为；只有 Skill 被调用且 Agent 按其流程工作时才可能发生。
+安装 Skill 不会自动执行写入或清理；只有 Agent 按 Skill 流程工作并获得相应授权时才可能发生。
 
 ## 新增 Skill 检查表
 
